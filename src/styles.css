@@ -1,0 +1,30 @@
+* {
+    border: 1px solid red;
+    margin: 0;
+    padding: 0;
+
+}
+:root{
+    background-color: #f4f4f4;
+}
+#container{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 200px auto;
+    #sidebar{
+        border-radius: 7px;
+        margin: 7px;
+        background-color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        padding: 7px;
+    }
+    #main{
+        border-radius: 7px;
+        margin: 7px;
+        background-color: #ffffff;
+    }
+}
