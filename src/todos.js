@@ -65,12 +65,18 @@ function renderTodoList() {
     todoListElement.innerHTML = '';
     getTodoList().forEach((todoObject, index) => {
         if (!todoObject.deleted) {
-            const todoItem = document.createElement('p');
+            const todoItem = document.createElement('div');
             todoItem.innerHTML = `<input type="checkbox" id="todoCheckbox">
-                                <span>${todoObject.content}</span>
+                                <span id="content">${todoObject.content}</span>
                                 <span>${todoObject.dateCreated.toLocaleString()}</span>
                                 <button type="button" id="deleteTodo">Delete</button>`;
             todoListElement.appendChild(todoItem);
+            if (todoObject.done) {
+                    const contentElement = todoItem.querySelector('#content');
+                    contentElement.style = "text-decoration: line-through;";
+                } else {
+                    todoItem.style = "text-decoration: none;";
+                }
             const deleteButton = todoItem.querySelector('#deleteTodo');
             deleteButton.addEventListener('click', () => {
                 todoObject.delete();
@@ -79,11 +85,7 @@ function renderTodoList() {
             const checkbox = todoItem.querySelector('#todoCheckbox');
             checkbox.addEventListener('change', () => {
                 todoObject.toggle();
-                if (todoObject.done) {
-                    todoItem.style.textDecoration = 'line-through';
-                } else {
-                    todoItem.style.textDecoration = 'none';
-                }
+                renderTodoList();
             });
         }
     });
