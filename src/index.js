@@ -15,3 +15,4 @@ binButton.addEventListener('click', () => {
 function switchWindow(windowName) {
     windowName.render();
 }
+

@@ -12,7 +12,7 @@ function renderBin() {
     const binElement = document.getElementById('binContent');
     binElement.innerHTML = '';
     const todoList = getTodoList();
-    todoList.forEach((todoObject, index) => {
+    todoList.forEach((todoObject) => {
         if (todoObject.deleted) {
             const todoItem = document.createElement('div');
             todoItem.innerHTML = `<span id="content">${todoObject.content}</span>

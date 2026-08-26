@@ -1,8 +1,23 @@
+import storageAvailable from './storageTest.js';
 
-let todoList = [];
+
+if (storageAvailable('localStorage')) { 
+    var todoList = JSON.parse(localStorage.getItem('todoList')) || [];
+} else {
+    console.log("Storage not available!");
+}
+
+function saveTodoList() {
+    if (storageAvailable('localStorage')) {
+        localStorage.setItem('todoList', JSON.stringify(todoList));
+    } else {
+        console.log("Storage not available!");
+    }
+}
 
 function appendTodoList(todoObject) {
     todoList.push(todoObject);
+    saveTodoList();
     todos.renderTodoList();
 }
 
@@ -13,6 +28,7 @@ function getTodoList() {
 
 const todos = {
     render : function() {
+        console.log("Rendering todos");
         const main = document.getElementById("main");
         main.innerHTML = `<button id="createNewTodo"> Create New Todo +</button>
             <div id="todoCreater"></div>
@@ -51,12 +67,6 @@ function createTodo(cont) {
         dateCreated,
         done,
         deleted,
-        delete: function() {
-            this.deleted = true;
-        },
-        toggle: function() {
-            this.done = !this.done;
-        }
     }
 }
 
@@ -79,12 +89,14 @@ function renderTodoList() {
                 }
             const deleteButton = todoItem.querySelector('#deleteTodo');
             deleteButton.addEventListener('click', () => {
-                todoObject.delete();
+                todoList[index].deleted = true;
+                saveTodoList();
                 renderTodoList();
             });
             const checkbox = todoItem.querySelector('#todoCheckbox');
             checkbox.addEventListener('change', () => {
-                todoObject.toggle();
+                todoList[index].done = !todoObject.done;
+                saveTodoList();
                 renderTodoList();
             });
         }
