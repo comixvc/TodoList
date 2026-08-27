@@ -59,7 +59,7 @@ const todos = {
 
 function createTodo(cont) {
     const content = cont;
-    const dateCreated = new Date();
+    const dateCreated = new Date().toDateString();
     let done = false;
     let deleted = false;
     return {
@@ -78,7 +78,7 @@ function renderTodoList() {
             const todoItem = document.createElement('div');
             todoItem.innerHTML = `<input type="checkbox" id="todoCheckbox">
                                 <span id="content">${todoObject.content}</span>
-                                <span>${todoObject.dateCreated.toLocaleString()}</span>
+                                <span>${todoObject.dateCreated}</span>
                                 <button type="button" id="deleteTodo">Delete</button>`;
             todoListElement.appendChild(todoItem);
             if (todoObject.done) {
@@ -105,4 +105,4 @@ function renderTodoList() {
 
 
 
-export { getTodoList, todos };
+export { getTodoList, todos, saveTodoList };
