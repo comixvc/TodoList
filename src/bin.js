@@ -1,4 +1,6 @@
-import { getTodoList, saveTodoList } from './todos.js';
+
+import { todoListProviderByCatagory } from './todoListProviderByCatagory.js';
+const { saveTodoList, appendTodoList, getTodoList } = todoListProviderByCatagory();
 
 const bin = {
     render: function() {

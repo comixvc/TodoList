@@ -1,29 +1,7 @@
 import storageAvailable from './storageTest.js';
+import { todoListProviderByCatagory } from './todoListProviderByCatagory.js';
 
-
-if (storageAvailable('localStorage')) { 
-    var todoList = JSON.parse(localStorage.getItem('todoList')) || [];
-} else {
-    console.log("Storage not available!");
-}
-
-function saveTodoList() {
-    if (storageAvailable('localStorage')) {
-        localStorage.setItem('todoList', JSON.stringify(todoList));
-    } else {
-        console.log("Storage not available!");
-    }
-}
-
-function appendTodoList(todoObject) {
-    todoList.push(todoObject);
-    saveTodoList();
-    todos.renderTodoList();
-}
-
-function getTodoList() {
-    return todoList;
-}
+const { saveTodoList, appendTodoList, getTodoList } = todoListProviderByCatagory();
 
 
 const todos = {
@@ -50,6 +28,7 @@ const todos = {
                 const todoContent = document.getElementById('todoContent').value;
                 const newTodo = createTodo(todoContent);
                 appendTodoList(newTodo);
+                todos.renderTodoList();
             });
         });
         renderTodoList();
@@ -71,9 +50,11 @@ function createTodo(cont) {
 }
 
 function renderTodoList() {
+    console.log("Rendering todo list");
     const todoListElement = document.getElementById('todoList');
     todoListElement.innerHTML = '';
     getTodoList().forEach((todoObject, index) => {
+        // console.log("Rendering todo: " + todoObject.content);
         if (!todoObject.deleted) {
             const todoItem = document.createElement('div');
             todoItem.innerHTML = `<input type="checkbox" id="todoCheckbox">
@@ -89,13 +70,13 @@ function renderTodoList() {
                 }
             const deleteButton = todoItem.querySelector('#deleteTodo');
             deleteButton.addEventListener('click', () => {
-                todoList[index].deleted = true;
+                getTodoList()[index].deleted = true;
                 saveTodoList();
                 renderTodoList();
             });
             const checkbox = todoItem.querySelector('#todoCheckbox');
             checkbox.addEventListener('change', () => {
-                todoList[index].done = !todoObject.done;
+                getTodoList()[index].done = !todoObject.done;
                 saveTodoList();
                 renderTodoList();
             });
@@ -105,4 +86,4 @@ function renderTodoList() {
 
 
 
-export { getTodoList, todos, saveTodoList };
+export { todos };
